@@ -29,3 +29,11 @@ change if there’s any (in 5, 10, 20, 50 and 100 cent coins)
 - npx prisma migrate dev --name init
 - npm run start
 - use the postman collection for testing/using the APIs
+
+## For your info
+```
+This project built with help of NestJs docs, Prisma docs and ChatGPT
+```
+- NestJs Link: https://docs.nestjs.com/
+- Prisma Link: https://www.prisma.io/docs/getting-started/quickstart
+- ChatGPT Thread Link: https://chatgpt.com/share/6880f958-f6a8-8011-8c00-d0055ea18d82
