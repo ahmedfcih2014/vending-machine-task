@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { Prisma, Product } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ProductReqDto } from 'src/product/dto/product-req.dto';
 
@@ -63,6 +64,48 @@ export class ProductService {
     if (!product) throw new NotFoundException('Product not found');
 
     return product;
+  }
+
+  async findByIds(id: number[]): Promise<Product[]> {
+    return await this.prisma.product.findMany({
+      where: { id: { in: id } },
+    });
+  }
+
+  async bulkDecrementAmountAvailableTx(
+    tx: Prisma.TransactionClient,
+    products: { id: number; decrementedAmt: number }[],
+    productsData: Product[],
+  ) {
+    const decrementMap = products.reduce(
+      (acc, curr) => {
+        acc[curr.id] = curr.decrementedAmt;
+        return acc;
+      },
+      {} as Record<number, number>,
+    );
+
+    if (products.length !== productsData.length) {
+      throw new NotFoundException('Some products not found');
+    }
+
+    for (const p of productsData) {
+      const requestedAmt = decrementMap[p.id];
+      if (p.amountAvailable < requestedAmt) {
+        throw new ForbiddenException(
+          `Insufficient stock for product ID ${p.id}`,
+        );
+      }
+    }
+
+    await Promise.all(
+      products.map((p) =>
+        tx.product.update({
+          where: { id: p.id },
+          data: { amountAvailable: { decrement: p.decrementedAmt } },
+        }),
+      ),
+    );
   }
 
   async update(id: number, dto: ProductReqDto) {

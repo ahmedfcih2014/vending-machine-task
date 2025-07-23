@@ -10,6 +10,6 @@ import { DepositService } from './deposit.service';
   imports: [PrismaModule, forwardRef(() => AuthModule)],
   providers: [UserService, DepositService],
   controllers: [UserController, DepositController],
-  exports: [UserService],
+  exports: [UserService, DepositService],
 })
 export class UserModule {}

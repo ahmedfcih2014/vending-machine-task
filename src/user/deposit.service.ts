@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { Prisma } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { DepositDto } from 'src/user/dto/deposit.dto';
 
@@ -26,5 +31,25 @@ export class DepositService {
     ]);
 
     return `Your deposit reseted to 0 successful`;
+  }
+
+  async withdrawTx(
+    tx: Prisma.TransactionClient,
+    buyerId: number,
+    cents: number,
+  ) {
+    const user = await tx.user.findUnique({ where: { id: buyerId } });
+    if (!user) throw new NotFoundException('User not found');
+
+    if (user.deposit < cents) {
+      throw new BadRequestException('Insufficient deposit');
+    }
+
+    await tx.user.update({
+      where: { id: buyerId },
+      data: {
+        deposit: { decrement: cents },
+      },
+    });
   }
 }
