@@ -26,15 +26,23 @@ change if there’s any (in 5, 10, 20, 50 and 100 cent coins)
 
 ## Run project
 - npm run install
+- cp .env.example .env ``` Don`t forget to change ur env variables in the .env file ```
 - npx prisma migrate dev --name init
 - npm run start
 - use the postman collection for testing/using the APIs
+    * file path: project-root/postman-collection.json
+
+## To run E2E test
+- npm run install
+- cp .env.example .env ``` Don`t forget to change ur env variables in the .env file ```
+- npx prisma migrate dev --name init
+- npm run test:e2e
 
 ## For your info
 ```
 This project built with help of NestJs docs, Prisma docs and ChatGPT
 ```
-- NestJs Link: https://docs.nestjs.com/
-- Prisma Link: https://www.prisma.io/docs/getting-started/quickstart
-- ChatGPT Thread Link: https://chatgpt.com/share/6880f958-f6a8-8011-8c00-d0055ea18d82
-- ChatGPT Thread for write e2e test Link: https://chatgpt.com/share/6881159a-0b7c-8011-9b32-7d9254053a8a
+- NestJs : https://docs.nestjs.com/
+- Prisma : https://www.prisma.io/docs/getting-started/quickstart
+- ChatGPT Thread for impl. : https://chatgpt.com/share/6880f958-f6a8-8011-8c00-d0055ea18d82
+- ChatGPT Thread for write E2E test : https://chatgpt.com/share/6881159a-0b7c-8011-9b32-7d9254053a8a
