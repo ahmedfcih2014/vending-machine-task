@@ -37,3 +37,4 @@ This project built with help of NestJs docs, Prisma docs and ChatGPT
 - NestJs Link: https://docs.nestjs.com/
 - Prisma Link: https://www.prisma.io/docs/getting-started/quickstart
 - ChatGPT Thread Link: https://chatgpt.com/share/6880f958-f6a8-8011-8c00-d0055ea18d82
+- ChatGPT Thread for write e2e test Link: https://chatgpt.com/share/6881159a-0b7c-8011-9b32-7d9254053a8a
